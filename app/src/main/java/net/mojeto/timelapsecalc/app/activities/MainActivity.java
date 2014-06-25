@@ -1,5 +1,6 @@
 package net.mojeto.timelapsecalc.app.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,9 @@ import net.mojeto.timelapsecalc.app.fragments.SumOfFramesFragment;
 
 public class MainActivity extends ActionBarActivity implements MainFragment.OnChangeValueListener,
         FrameRateFragment.OnFrameRateChangeListener, SumOfFramesFragment.OnSumOfFramesChangeListener {
+
+    private static final int REQUEST_VIDEO_FRAME_RATE = 1;
+    private static final int REQUEST_CAMERA_SUM_OF_FRAMES = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,36 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
         }
     }
 
+    /**
+     * Dispatch incoming result to the correct fragment.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_VIDEO_FRAME_RATE:
+                if(resultCode != RESULT_OK)
+                    return;
+                onFrameRateChange(data.getDoubleExtra(FrameRateActivity.EXTRA_FRAME_RATE, 25),
+                        (ValueForChange) data.getSerializableExtra(FrameRateActivity.EXTRA_RECOUNT));
+                break;
+            case REQUEST_CAMERA_SUM_OF_FRAMES:
+                if(resultCode != RESULT_OK)
+                    return;
+                onSumOfFramesChange(data.getLongExtra(SumOfFramesActivity.EXTRA_SUM_OF_FRAMES, 1),
+                        (ValueForChange) data.getSerializableExtra(
+                                SumOfFramesActivity.EXTRA_CAMERA_RECOUNT),
+                        (ValueForChange) data.getSerializableExtra(
+                                SumOfFramesActivity.EXTRA_VIDEO_RECOUNT));
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     @Override
     public void onFrameRateChange(double value, ValueForChange change) {
         getChangeValue().setVideoFrameRate(value, change);
@@ -67,22 +101,30 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
 
     @Override
     public void onChangeVideoFrameRateClick(double frameRate) {
+        ValueForChange recount = ValueForChange.VIDEO_DURATION;
         if ( useEditFragment() ) {
-            setEditFragment(FrameRateFragment.newInstance(frameRate,
-                    ValueForChange.VIDEO_DURATION));
+            setEditFragment(FrameRateFragment.newInstance(frameRate, recount));
         } else {
-            //TODO start edition activity
-            //callEditActivity();
+            Intent intent = new Intent(this, FrameRateActivity.class);
+            intent.putExtra(FrameRateActivity.EXTRA_FRAME_RATE, frameRate);
+            intent.putExtra(FrameRateActivity.EXTRA_RECOUNT, recount);
+            startActivityForResult(intent, REQUEST_VIDEO_FRAME_RATE);
         }
     }
 
     @Override
     public void onChangeCameraSumOfFramesClick(long sumOfFrames) {
+        ValueForChange cameraRecount = ValueForChange.CAMERA_RECORD_DURATION;
+        ValueForChange videoRecount = ValueForChange.VIDEO_DURATION;
         if ( useEditFragment() ) {
-            setEditFragment(SumOfFramesFragment.newInstance(sumOfFrames,
-                    ValueForChange.CAMERA_RECORD_DURATION, ValueForChange.VIDEO_DURATION));
+            setEditFragment(SumOfFramesFragment.newInstance(sumOfFrames, cameraRecount,
+                    videoRecount));
         } else {
-            //TODO start edition activity
+            Intent intent = new Intent(this, SumOfFramesActivity.class);
+            intent.putExtra(SumOfFramesActivity.EXTRA_SUM_OF_FRAMES, sumOfFrames);
+            intent.putExtra(SumOfFramesActivity.EXTRA_CAMERA_RECOUNT, cameraRecount);
+            intent.putExtra(SumOfFramesActivity.EXTRA_VIDEO_RECOUNT, videoRecount);
+            startActivityForResult(intent, REQUEST_CAMERA_SUM_OF_FRAMES);
         }
     }
 

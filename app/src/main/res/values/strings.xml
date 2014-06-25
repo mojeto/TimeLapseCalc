@@ -27,8 +27,12 @@
     <string name="recount_video_duration">Video clip duration</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--fragment sum of fragments -->
+    <!-- fragment sum of fragments -->
     <string name="edit_sum_of_frames">Edit camera sum of photos</string>
     <string name="choose_affect_camera">Changing value will affect camera value:</string>
     <string name="choose_affect_video">Changing value will affect video value:</string>
+
+    <string name="title_activity_frame_rate">Change video frame rate</string>
+    <string name="title_activity_sum_of_frames">Change camera sum of photos</string>
+
 </resources>
