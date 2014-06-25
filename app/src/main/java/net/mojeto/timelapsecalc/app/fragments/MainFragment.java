@@ -16,6 +16,8 @@ import net.mojeto.timelapsecalc.app.R;
 import net.mojeto.timelapsecalc.app.ValueForChange;
 import net.mojeto.timelapsecalc.app.Video;
 
+import static java.lang.Math.round;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -146,9 +148,9 @@ public class MainFragment extends Fragment {
                         mCamera.getSumOfFrames()));
 
         ((TextView) view.findViewById(R.id.video_frame_rate))
-                //.setText(String.format(r.getString(R.string.video_frame_rate_value),
-                //        mVideo.getFrameRate()));
-                .setText(String.valueOf(mVideo.getFrameRate()));
+                .setText(String.format(r.getString(R.string.video_frame_rate_value),
+                        round(mVideo.getFrameRate())));
+                //.setText(String.valueOf(mVideo.getFrameRate()));
 
         ((TextView) view.findViewById(R.id.video_duration))
                 .setText(mVideo.getDuration().format(r, Duration.Format.WITH_DAYS));

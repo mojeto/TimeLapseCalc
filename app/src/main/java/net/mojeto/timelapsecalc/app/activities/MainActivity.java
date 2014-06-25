@@ -1,6 +1,7 @@
 package net.mojeto.timelapsecalc.app.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -82,9 +83,20 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
     public void onChangeValue(Video video, Camera camera, ValueForChange type) {
         mVideo = video;
         mCamera = camera;
-        if ( findViewById(R.id.edit_column) != null ) {
-            FrameRateFragment fragment = FrameRateFragment.newInstance(video.getFrameRate());
-            getSupportFragmentManager().beginTransaction().replace(R.id.edit_column, fragment).commit();
+        boolean useFragment = findViewById(R.id.edit_column) != null;
+        Fragment fragment = null;
+        switch (type) {
+            case VIDEO_FRAME_RATE:
+                if (useFragment)
+                    fragment = (Fragment) FrameRateFragment.newInstance(video.getFrameRate(),
+                            ValueForChange.VIDEO_DURATION);
+                break;
+            default:
+                return;
+        }
+        if ( fragment != null ) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.edit_column, fragment)
+                    .commit();
         }
 
     }
@@ -94,10 +106,6 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
         Log.d("MainActivity.onFrameRateChange", String.valueOf(value));
         Duration videoDuration;
         switch (change) {
-            case VIDEO_FRAME_RATE:
-            case VIDEO_DURATION:
-                mVideo.setFrameRate(value);
-                break;
             case CAMERA_FRAME_DURATION:
                 //set video frame rate change sum of frames
                 videoDuration = mVideo.getDuration();
@@ -117,6 +125,10 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
 
                 //set camera sum of frames, change frame rate
                 mCamera.setSumOfFrames(mVideo.getSumOfFrames());
+                break;
+            case VIDEO_DURATION:
+            default:
+                mVideo.setFrameRate(value);
                 break;
         }
 

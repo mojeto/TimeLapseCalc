@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="recount_names">
-        <item>Camera shot interval</item>
-        <item>Camera record duration</item>
-        <item>Video frame rate</item>
-        <item>Video clip duration</item>
+    <string-array name="frame_rate_recount_names">
+        <item>@string/recount_camera_sum_and_frame_duration</item>
+        <item>@string/recount_camera_sum_and_duration</item>
+        <item>@string/recount_video_duration</item>
     </string-array>
 </resources>
