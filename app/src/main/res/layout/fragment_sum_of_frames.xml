@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.FrameRateFragment">
-
+    tools:context=".fragments.SumOfFramesFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -13,26 +12,35 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_frame_rate"/>
+            android:text="@string/edit_sum_of_frames"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_frame_rate"
+            android:id="@+id/edit_sum"
             android:inputType="numberSigned"/>
 
         <TextView
-            android:text="@string/choose_affect"
+            android:text="@string/choose_affect_camera"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView" />
+            android:layout_height="wrap_content" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner"
-            android:entries="@array/frame_rate_recount_names"></Spinner>
-        </LinearLayout>
+            android:id="@+id/spinner_camera"
+            android:entries="@array/sum_camera_recount_names"></Spinner>
 
+        <TextView
+            android:text="@string/choose_affect_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_video"
+            android:entries="@array/sum_video_recount_names"></Spinner>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp">
@@ -51,5 +59,4 @@
             android:text="@string/text_ok"
             android:gravity="center"/>
     </LinearLayout>
-
 </LinearLayout>

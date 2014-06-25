@@ -2,6 +2,7 @@ package net.mojeto.timelapsecalc.app.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,9 +12,10 @@ import net.mojeto.timelapsecalc.app.R;
 import net.mojeto.timelapsecalc.app.ValueForChange;
 import net.mojeto.timelapsecalc.app.fragments.FrameRateFragment;
 import net.mojeto.timelapsecalc.app.fragments.MainFragment;
+import net.mojeto.timelapsecalc.app.fragments.SumOfFramesFragment;
 
 public class MainActivity extends ActionBarActivity implements MainFragment.OnChangeValueListener,
-        FrameRateFragment.OnFrameRateChangeListener {
+        FrameRateFragment.OnFrameRateChangeListener, SumOfFramesFragment.OnSumOfFramesChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
     @Override
     public void onFrameRateChange(double value, ValueForChange change) {
         getChangeValue().setVideoFrameRate(value, change);
+        clearEditColumn();
     }
 
     //Implements MainFragment.OnChangeValueListener methods
@@ -71,5 +74,34 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
             //TODO start edition activity
             //callEditActivity();
         }
+    }
+
+    @Override
+    public void onChangeCameraSumOfFramesClick(long sumOfFrames) {
+        if ( useEditFragment() ) {
+            setEditFragment(SumOfFramesFragment.newInstance(sumOfFrames,
+                    ValueForChange.CAMERA_RECORD_DURATION, ValueForChange.VIDEO_DURATION));
+        } else {
+            //TODO start edition activity
+        }
+    }
+
+    @Override
+    public void onCancel() {
+        clearEditColumn();
+    }
+
+    public void clearEditColumn() {
+        if ( useEditFragment() ) {
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().remove(fm.findFragmentById(R.id.edit_column)).commit();
+        }
+    }
+
+    @Override
+    public void onSumOfFramesChange(long sumOfFrames, ValueForChange cameraRecount,
+                                    ValueForChange videoRecount) {
+        getChangeValue().setCameraSumOfFrames(sumOfFrames, cameraRecount, videoRecount);
+        clearEditColumn();
     }
 }

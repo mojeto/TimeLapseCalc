@@ -90,13 +90,12 @@ public class MainFragment extends Fragment implements ChangeValue{
 //                                ValueForChange.CAMERA_RECORD_DURATION);
 //                    }
 //                });
-//        view.findViewById(R.id.camera_frames)
-//                .setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        callChangeValue(mVideo, mCamera,
-//                                ValueForChange.CAMERA_FRAMES);
-//                    }
-//                });
+        view.findViewById(R.id.camera_frames)
+                .setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        callChangeCameraFrames(mCalc.getCamera().getSumOfFrames());
+                    }
+                });
 //
         view.findViewById(R.id.video_frame_rate)
                 .setOnClickListener(new View.OnClickListener() {
@@ -122,6 +121,12 @@ public class MainFragment extends Fragment implements ChangeValue{
         updateValues(view, getResources(), mCalc.getCamera(), mCalc.getVideo());
     }
 
+    public void callChangeCameraFrames(long sumOfFrames) {
+        if ( mListener != null ) {
+            mListener.onChangeCameraSumOfFramesClick(sumOfFrames);
+        }
+    }
+
     public void callChangeFrameRate(double frameRate) {
         if (mListener != null) {
             mListener.onChangeVideoFrameRateClick(frameRate);
@@ -139,6 +144,29 @@ public class MainFragment extends Fragment implements ChangeValue{
             case VIDEO_DURATION:
             default:
                 mCalc.setVideoFrameRateChangeVideoDuration(frameRate);
+                break;
+        }
+        updateValues(mCalc.getCamera(), mCalc.getVideo());
+    }
+
+    @Override
+    public void setCameraSumOfFrames(long sumOfFrames, ValueForChange cameraRecount,
+                                     ValueForChange videoRecount) {
+        switch (cameraRecount) {
+            case CAMERA_FRAME_DURATION:
+                if (videoRecount == ValueForChange.VIDEO_FRAME_RATE) {
+                    mCalc.setCameraSumChangeCameraAndVideoFrameDuration(sumOfFrames);
+                } else {
+                    mCalc.setCameraSumChangeCameraFrameDurationAndVideoDuration(sumOfFrames);
+                }
+                break;
+            case CAMERA_RECORD_DURATION:
+            default:
+                if (videoRecount == ValueForChange.VIDEO_FRAME_RATE) {
+                    mCalc.setCameraSumChangeCameraDurationAndVideoFrameDuration(sumOfFrames);
+                } else {
+                    mCalc.setCameraSumChangeCameraAndVideoDuration(sumOfFrames);
+                }
                 break;
         }
         updateValues(mCalc.getCamera(), mCalc.getVideo());
@@ -198,6 +226,8 @@ public class MainFragment extends Fragment implements ChangeValue{
     public interface OnChangeValueListener {
 
         public void onChangeVideoFrameRateClick(double frameRate);
+
+        public void onChangeCameraSumOfFramesClick(long sumOfFrames);
     }
 
 }

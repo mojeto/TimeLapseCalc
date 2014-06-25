@@ -19,13 +19,16 @@
     <string name="text_ok">Ok</string>
     <string name="text_cancel">Cancel</string>
     <string name="choose_affect">Changing value will affect:</string>
-
-
     <string name="recount_camera_frame_duration">Camera shot interval</string>
     <string name="recount_camera_sum_and_frame_duration">Sum of photos and camera shot interval</string>
     <string name="recount_camera_duration">Camera record duration</string>
     <string name="recount_camera_sum_and_duration">Sum of photos and camera record duration</string>
     <string name="recount_video_frame_rate">Video frame rate</string>
     <string name="recount_video_duration">Video clip duration</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--fragment sum of fragments -->
+    <string name="edit_sum_of_frames">Edit camera sum of photos</string>
+    <string name="choose_affect_camera">Changing value will affect camera value:</string>
+    <string name="choose_affect_video">Changing value will affect video value:</string>
 </resources>

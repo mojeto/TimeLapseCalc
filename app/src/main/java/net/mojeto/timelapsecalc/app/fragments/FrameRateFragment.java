@@ -3,7 +3,6 @@ package net.mojeto.timelapsecalc.app.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,25 +75,32 @@ public class FrameRateFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onClickCancel(v);
+            }
+        });
+
         ((Spinner) view.findViewById(R.id.spinner)).setSelection(mPosition);
         return view;
     }
 
-    public void onClickOk(View view) {
-        double value = Double.valueOf(((EditText) getView().findViewById(R.id.edit_frame_rate))
-                .getText().toString());
-        Log.d("onClickOk", String.valueOf(value));
-
-        int code = ((Spinner) getView().findViewById(R.id.spinner)).getSelectedItemPosition();
-        Log.d("change code", String.valueOf(code));
-
-        ValueForChange change = spinnerPositionToRecount(code);
-        mValue = value;
-        if ( mListener != null ) {
-            mListener.onFrameRateChange(value, change);
+    public void onClickCancel(View view) {
+        if (mListener != null) {
+            mListener.onCancel();
         }
     }
 
+    public void onClickOk(View view) {
+        mValue = Double.valueOf(((EditText) getView().findViewById(R.id.edit_frame_rate))
+                .getText().toString());
+
+        mPosition = ((Spinner) getView().findViewById(R.id.spinner)).getSelectedItemPosition();
+
+        if ( mListener != null ) {
+            mListener.onFrameRateChange(mValue, spinnerPositionToRecount(mPosition));
+        }
+    }
 
     public int recountToSpinnerPosition(ValueForChange recount) {
         switch (recount) {
@@ -150,6 +156,7 @@ public class FrameRateFragment extends Fragment {
      */
     public interface OnFrameRateChangeListener {
 
+        public void onCancel();
         public void onFrameRateChange(double value, ValueForChange type);
     }
 

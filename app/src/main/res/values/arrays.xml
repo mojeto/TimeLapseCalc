@@ -5,4 +5,12 @@
         <item>@string/recount_camera_sum_and_duration</item>
         <item>@string/recount_video_duration</item>
     </string-array>
+    <string-array name="sum_camera_recount_names">
+        <item>@string/recount_camera_frame_duration</item>
+        <item>@string/recount_camera_duration</item>
+    </string-array>
+    <string-array name="sum_video_recount_names">
+        <item>@string/recount_video_frame_rate</item>
+        <item>@string/recount_video_duration</item>
+    </string-array>
 </resources>

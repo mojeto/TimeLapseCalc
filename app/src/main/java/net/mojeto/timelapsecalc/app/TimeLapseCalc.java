@@ -46,4 +46,35 @@ public class TimeLapseCalc {
     public void setVideoFrameRateChangeVideoDuration(double frameRate) {
         mVideo.setFrameRate(frameRate);
     }
+
+    public void setCameraSumChangeCameraAndVideoFrameDuration(long sumOfFrames) {
+        Duration cameraDuration = mCamera.getDuration();
+        mCamera.setSumOfFrames(sumOfFrames);
+        mCamera.setDuration(cameraDuration, FrameSet.Change.FRAME_DURATION);
+
+        Duration videoDuration = mVideo.getDuration();
+        mVideo.setSumOfFrames(sumOfFrames);
+        mVideo.setDuration(videoDuration, FrameSet.Change.FRAME_DURATION);
+    }
+
+    public void setCameraSumChangeCameraFrameDurationAndVideoDuration(long sumOfFrames) {
+        Duration cameraDuration = mCamera.getDuration();
+        mCamera.setSumOfFrames(sumOfFrames);
+        mCamera.setDuration(cameraDuration, FrameSet.Change.FRAME_DURATION);
+
+        mVideo.setSumOfFrames(sumOfFrames);
+    }
+
+    public void setCameraSumChangeCameraDurationAndVideoFrameDuration(long sumOfFrames) {
+        mCamera.setSumOfFrames(sumOfFrames);
+
+        Duration videoDuration = mVideo.getDuration();
+        mVideo.setSumOfFrames(sumOfFrames);
+        mVideo.setDuration(videoDuration, FrameSet.Change.FRAME_DURATION);
+    }
+
+    public void setCameraSumChangeCameraAndVideoDuration(long sumOfFrames) {
+        mCamera.setSumOfFrames(sumOfFrames);
+        mVideo.setSumOfFrames(sumOfFrames);
+    }
 }
