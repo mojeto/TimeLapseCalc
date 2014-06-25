@@ -4,15 +4,16 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.mojeto.timelapsecalc.app.Camera;
+import net.mojeto.timelapsecalc.app.ChangeValue;
 import net.mojeto.timelapsecalc.app.Duration;
 import net.mojeto.timelapsecalc.app.R;
+import net.mojeto.timelapsecalc.app.TimeLapseCalc;
 import net.mojeto.timelapsecalc.app.ValueForChange;
 import net.mojeto.timelapsecalc.app.Video;
 
@@ -24,15 +25,14 @@ import static java.lang.Math.round;
  * {@link net.mojeto.timelapsecalc.app.fragments.MainFragment.OnChangeValueListener} interface
  * to handle interaction events.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements ChangeValue{
 
     private static final String ARG_CAMERA_FRAME_DURATION = "cameraFrameDuration";
     private static final String ARG_CAMERA_FRAMES = "cameraFrames";
     private static final String ARG_VIDEO_FRAME_DURATION = "videoFrameDuration";
     private static final String ARG_VIDEO_FRAMES = "videoFrames";
 
-    private Video mVideo;
-    private Camera mCamera;
+    private TimeLapseCalc mCalc;
 
     private OnChangeValueListener mListener;
 
@@ -43,22 +43,24 @@ public class MainFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putDouble(ARG_VIDEO_FRAME_DURATION, mVideo.getFrameDuration().getValue());
-        outState.putLong(ARG_VIDEO_FRAMES, mVideo.getSumOfFrames());
-        outState.putDouble(ARG_CAMERA_FRAME_DURATION, mCamera.getFrameDuration().getValue());
-        outState.putLong(ARG_CAMERA_FRAMES, mCamera.getSumOfFrames());
+        Video video = mCalc.getVideo();
+        Camera camera = mCalc.getCamera();
+        outState.putDouble(ARG_VIDEO_FRAME_DURATION, video.getFrameDuration().getValue());
+        outState.putLong(ARG_VIDEO_FRAMES, video.getSumOfFrames());
+        outState.putDouble(ARG_CAMERA_FRAME_DURATION, camera.getFrameDuration().getValue());
+        outState.putLong(ARG_CAMERA_FRAMES, camera.getSumOfFrames());
 
     }
 
     public void loadSaveInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            mVideo = new Video(savedInstanceState.getDouble(ARG_VIDEO_FRAME_DURATION),
-                    savedInstanceState.getLong(ARG_VIDEO_FRAMES));
-            mCamera = new Camera(savedInstanceState.getDouble(ARG_CAMERA_FRAME_DURATION),
-                    savedInstanceState.getLong(ARG_CAMERA_FRAMES));
+            mCalc = new TimeLapseCalc(
+                        new Camera(savedInstanceState.getDouble(ARG_CAMERA_FRAME_DURATION),
+                                   savedInstanceState.getLong(ARG_CAMERA_FRAMES)),
+                        new Video(savedInstanceState.getDouble(ARG_VIDEO_FRAME_DURATION),
+                                  savedInstanceState.getLong(ARG_VIDEO_FRAMES)));
         } else {
-            mVideo = new Video(40l, 600);
-            mCamera = new Camera(2000l, 600);
+            mCalc = new TimeLapseCalc(new Camera(2000l, 600), new Video(40l, 600));
         }
     }
 
@@ -74,45 +76,42 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        Log.d("MainFragment", "onCreateView");
-
-        view.findViewById(R.id.camera_frame_duration)
-                .setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        callChangeValue(mVideo, mCamera,
-                                ValueForChange.CAMERA_FRAME_DURATION);
-                    }
-                });
-        view.findViewById(R.id.camera_record_duration)
-                .setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        callChangeValue(mVideo, mCamera,
-                                ValueForChange.CAMERA_RECORD_DURATION);
-                    }
-                });
-        view.findViewById(R.id.camera_frames)
-                .setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        callChangeValue(mVideo, mCamera,
-                                ValueForChange.CAMERA_FRAMES);
-                    }
-                });
-
+//        view.findViewById(R.id.camera_frame_duration)
+//                .setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        callChangeValue(mVideo, mCamera,
+//                                ValueForChange.CAMERA_FRAME_DURATION);
+//                    }
+//                });
+//        view.findViewById(R.id.camera_record_duration)
+//                .setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        callChangeValue(mVideo, mCamera,
+//                                ValueForChange.CAMERA_RECORD_DURATION);
+//                    }
+//                });
+//        view.findViewById(R.id.camera_frames)
+//                .setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        callChangeValue(mVideo, mCamera,
+//                                ValueForChange.CAMERA_FRAMES);
+//                    }
+//                });
+//
         view.findViewById(R.id.video_frame_rate)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        callChangeValue(mVideo, mCamera,
-                                ValueForChange.VIDEO_FRAME_RATE);
+                        callChangeFrameRate(mCalc.getVideo().getFrameRate());
                     }
                 });
-
-        view.findViewById(R.id.video_duration)
-                .setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        callChangeValue(mVideo, mCamera,
-                                ValueForChange.VIDEO_DURATION);
-                    }
-                });
+//
+//        view.findViewById(R.id.video_duration)
+//                .setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        callChangeValue(mVideo, mCamera,
+//                                ValueForChange.VIDEO_DURATION);
+//                    }
+//                });
 
         return view;
     }
@@ -120,40 +119,52 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateValues(view, getResources());
+        updateValues(view, getResources(), mCalc.getCamera(), mCalc.getVideo());
     }
 
-    public void callChangeValue(Video video, Camera camera,
-                                ValueForChange change) {
+    public void callChangeFrameRate(double frameRate) {
         if (mListener != null) {
-            mListener.onChangeValue(video, camera, change);
+            mListener.onChangeVideoFrameRateClick(frameRate);
         }
     }
 
-    public void updateValues(Video video, Camera camera) {
-        mVideo = video;
-        mCamera = camera;
-        updateValues(getView(), getResources());
+    @Override
+    public void setVideoFrameRate(double frameRate, ValueForChange recount) {
+        switch (recount) {
+            case CAMERA_FRAME_DURATION:
+                mCalc.setVideoFrameRateChangeCameraFrameDuration(frameRate);
+                break;
+            case CAMERA_RECORD_DURATION:
+                mCalc.setVideoFrameRateChangeCameraDuration(frameRate);
+            case VIDEO_DURATION:
+            default:
+                mCalc.setVideoFrameRateChangeVideoDuration(frameRate);
+                break;
+        }
+        updateValues(mCalc.getCamera(), mCalc.getVideo());
     }
 
-    public void updateValues(View view, Resources r) {
+    public void updateValues(Camera camera, Video video) {
+        updateValues(getView(), getResources(), camera, video);
+    }
+
+    public void updateValues(View view, Resources r, Camera camera, Video video) {
         ((TextView) view.findViewById(R.id.camera_frame_duration))
-                .setText(mCamera.getFrameDuration().format(r, Duration.Format.WITH_HOURS));
+                .setText(camera.getFrameDuration().format(r, Duration.Format.WITH_HOURS));
 
         ((TextView) view.findViewById(R.id.camera_record_duration))
-                .setText(mCamera.getDuration().format(r, Duration.Format.WITH_DAYS));
+                .setText(camera.getDuration().format(r, Duration.Format.WITH_DAYS));
 
         ((TextView) view.findViewById(R.id.camera_frames))
                 .setText(String.format(r.getString(R.string.camera_frames_value),
-                        mCamera.getSumOfFrames()));
+                        camera.getSumOfFrames()));
 
         ((TextView) view.findViewById(R.id.video_frame_rate))
                 .setText(String.format(r.getString(R.string.video_frame_rate_value),
-                        round(mVideo.getFrameRate())));
-                //.setText(String.valueOf(mVideo.getFrameRate()));
+                        round(video.getFrameRate())));
 
         ((TextView) view.findViewById(R.id.video_duration))
-                .setText(mVideo.getDuration().format(r, Duration.Format.WITH_DAYS));
+                .setText(video.getDuration().format(r, Duration.Format.WITH_DAYS));
     }
 
     @Override
@@ -173,6 +184,7 @@ public class MainFragment extends Fragment {
         mListener = null;
     }
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -185,7 +197,7 @@ public class MainFragment extends Fragment {
      */
     public interface OnChangeValueListener {
 
-        public void onChangeValue(Video video, Camera camera, ValueForChange type);
+        public void onChangeVideoFrameRateClick(double frameRate);
     }
 
 }
