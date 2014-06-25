@@ -2,7 +2,22 @@
 <resources>
 
     <string name="app_name">Time lapse calc</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="camera_label">Photo camera</string>
+    <string name="camera_frame_duration">Shot interval </string>
+    <string name="camera_record_duration">Record duration </string>
+    <string name="camera_frames">Sum of photos</string>
+    <string name="camera_frames_value">%1$04d</string>
+    <string name="video_label">Movie clip</string>
+    <string name="video_frame_rate">Frame rate</string>
+    <string name="edit_frame_rate">Edit video frame rate</string>
+    <string name="edit_frame_rate_value">%1$.0f</string>
+    <string name="video_frame_rate_value">%1$.2f frames per second</string>
+    <string name="video_duration">Clip duration</string>
+    <string name="duration_with_days">%1$d days %2$02d:%3$02d:%4$02d:%5$03d</string>
+    <string name="duration_with_hours">%1$02d:%2$02d:%3$02d:%4$03d</string>
+    <string name="text_ok">Ok</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="choose_affect">Set will affect:</string>
 
 </resources>

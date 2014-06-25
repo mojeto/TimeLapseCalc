@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="recount_names">
+        <item>Camera shot interval</item>
+        <item>Camera record duration</item>
+        <item>Video frame rate</item>
+        <item>Video clip duration</item>
+    </string-array>
+</resources>

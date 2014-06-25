@@ -2,46 +2,42 @@ package net.mojeto.timelapsecalc.app;
 
 //import net.mojeto.timelapsecalc.app.fragments.FrameRateFragment;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by honza on 21.6.14.
  */
 public enum ValueForChange
 {
-    CAMERA_FRAME_DURATION(0, null),
-    CAMERA_RECORD_DURATION(1, null),
-    CAMERA_FRAMES(2, null),
-    VIDEO_FRAME_RATE(3, null),
-    VIDEO_DURATION(4, null),
-    VIDEO_FRAMES(5, null);
 
+    CAMERA_FRAME_DURATION(0),
+    CAMERA_RECORD_DURATION(1),
+    VIDEO_FRAME_RATE(2),
+    VIDEO_DURATION(3),
+    CAMERA_FRAMES(4),
+    VIDEO_FRAMES(5);
+
+
+    private static Map<Integer, ValueForChange> enumMap = new HashMap<Integer,ValueForChange>(6);
     private int code;
-    private java.lang.Class cls;
 
-    private ValueForChange(int code, java.lang.Class<?> cls) {
-        this.code = code;
-        this.cls = cls;
+    static {
+        for (ValueForChange value: ValueForChange.values() ) {
+            enumMap.put(value.getCode(), value);
+        }
+    }
+
+    public static ValueForChange getInstanceForCode(int code) {
+        return enumMap.get(code);
     }
 
     private ValueForChange(int code) {
-        this(code, null);
+        this.code = code;
     }
 
     public int getCode() {
         return code;
     }
 
-    public java.lang.Class getCls() {
-        return cls;
-    }
-
-    public Object getClsInstance() {
-        try {
-            return getCls().newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
