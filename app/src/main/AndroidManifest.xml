@@ -33,6 +33,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.mojeto.timelapsecalc.app.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.TimeSetActivity"
+            android:label="@string/title_activity_time_set"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.mojeto.timelapsecalc.app.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

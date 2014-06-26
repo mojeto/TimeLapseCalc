@@ -21,6 +21,32 @@ public class TimeLapseCalc {
         return mCamera;
     }
 
+    public void setCameraFrameDuration(Duration time, ValueForChange recount) {
+        Duration cameraDuration;
+        switch(recount) {
+            case CAMERA_RECORD_DURATION:
+                mCamera.setFrameDuration(time);
+                break;
+            case VIDEO_FRAME_RATE:
+                cameraDuration = mCamera.getDuration();
+                mCamera.setFrameDuration(time);
+                mCamera.setDuration(cameraDuration, FrameSet.Change.SUM_OF_FRAMES);
+                Duration videoDuration = mVideo.getDuration();
+                mVideo.setSumOfFrames(mCamera.getSumOfFrames());
+                mVideo.setDuration(videoDuration, FrameSet.Change.FRAME_DURATION);
+                break;
+            case VIDEO_DURATION:
+                cameraDuration = mCamera.getDuration();
+                mCamera.setFrameDuration(time);
+                mCamera.setDuration(cameraDuration, FrameSet.Change.SUM_OF_FRAMES);
+                mVideo.setSumOfFrames(mCamera.getSumOfFrames());
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        "Can't set camera frame duration and recount " + recount.toString());
+        }
+    }
+
     public void setVideoFrameRateChangeCameraFrameDuration(double frameRate) {
         //set video frame rate change sum of frames
         Duration videoDuration = mVideo.getDuration();

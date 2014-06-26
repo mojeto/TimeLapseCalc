@@ -24,15 +24,23 @@
     <string name="recount_camera_duration">Camera record duration</string>
     <string name="recount_camera_sum_and_duration">Sum of photos and camera record duration</string>
     <string name="recount_video_frame_rate">Video frame rate</string>
+    <string name="recount_sum_and_video_frame_rate">Sum of photos and video frame rate</string>
     <string name="recount_video_duration">Video clip duration</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="recount_sum_and_video_duration">Sum of photos and video clip duration</string>
+
+    <string name="edit_camera_frame_duration">Edit camera shot interval</string>
+    <string name="text_hours">Hours</string>
+    <string name="text_minutes">Minutes</string>
+    <string name="text_seconds">Seconds</string>
+    <string name="text_milliseconds">Milliseconds</string>
 
     <!-- fragment sum of fragments -->
     <string name="edit_sum_of_frames">Edit camera sum of photos</string>
     <string name="choose_affect_camera">Changing value will affect camera value:</string>
     <string name="choose_affect_video">Changing value will affect video value:</string>
-
     <string name="title_activity_frame_rate">Change video frame rate</string>
     <string name="title_activity_sum_of_frames">Change camera sum of photos</string>
+    <string name="title_activity_time_set">TimeSetActivity</string>
+
 
 </resources>

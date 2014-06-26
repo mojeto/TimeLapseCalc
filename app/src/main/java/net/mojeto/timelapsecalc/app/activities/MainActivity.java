@@ -9,17 +9,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import net.mojeto.timelapsecalc.app.ChangeValue;
+import net.mojeto.timelapsecalc.app.Duration;
 import net.mojeto.timelapsecalc.app.R;
 import net.mojeto.timelapsecalc.app.ValueForChange;
+import net.mojeto.timelapsecalc.app.fragments.CameraFrameDurationFragment;
 import net.mojeto.timelapsecalc.app.fragments.FrameRateFragment;
 import net.mojeto.timelapsecalc.app.fragments.MainFragment;
 import net.mojeto.timelapsecalc.app.fragments.SumOfFramesFragment;
+import net.mojeto.timelapsecalc.app.fragments.TimeSetFragment;
 
 public class MainActivity extends ActionBarActivity implements MainFragment.OnChangeValueListener,
-        FrameRateFragment.OnFrameRateChangeListener, SumOfFramesFragment.OnSumOfFramesChangeListener {
+        FrameRateFragment.OnFrameRateChangeListener, SumOfFramesFragment.OnSumOfFramesChangeListener,
+        TimeSetFragment.OnTimeSetChangeListener {
 
     private static final int REQUEST_VIDEO_FRAME_RATE = 1;
     private static final int REQUEST_CAMERA_SUM_OF_FRAMES = 2;
+    private static final int REQUEST_CAMERA_FRAME_DURATION = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +91,13 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
                         (ValueForChange) data.getSerializableExtra(
                                 SumOfFramesActivity.EXTRA_VIDEO_RECOUNT));
                 break;
+            case REQUEST_CAMERA_FRAME_DURATION:
+                if(resultCode != RESULT_OK)
+                    return;
+                onTimeSetChange(new Duration(data.getDoubleExtra(TimeSetActivity.EXTRA_TIME, 0)),
+                        ValueForChange.CAMERA_FRAME_DURATION,
+                        (ValueForChange) data.getSerializableExtra(TimeSetActivity.EXTRA_RECOUNT));
+                break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
@@ -98,6 +110,20 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
     }
 
     //Implements MainFragment.OnChangeValueListener methods
+
+    @Override
+    public void onChangeCameraFrameDurationClick(Duration time) {
+        ValueForChange recount = ValueForChange.CAMERA_RECORD_DURATION;
+        if (useEditFragment()) {
+            setEditFragment(CameraFrameDurationFragment.newInstance(time, recount));
+        } else {
+            Intent request = new Intent(this, TimeSetActivity.class);
+            request.putExtra(TimeSetActivity.EXTRA_TIME, time.getValue());
+            request.putExtra(TimeSetActivity.EXTRA_RECOUNT, recount);
+            request.putExtra(TimeSetActivity.EXTRA_TYPE, ValueForChange.CAMERA_FRAME_DURATION);
+            startActivityForResult(request, REQUEST_CAMERA_FRAME_DURATION);
+        }
+    }
 
     @Override
     public void onChangeVideoFrameRateClick(double frameRate) {
@@ -130,6 +156,18 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
 
     @Override
     public void onCancel() {
+        clearEditColumn();
+    }
+
+    @Override
+    public void onTimeSetChange(Duration time, ValueForChange type, ValueForChange recount) {
+        switch (type) {
+            case CAMERA_FRAME_DURATION:
+                getChangeValue().setCameraFrameDuration(time, recount);
+                break;
+            default:
+                throw new IllegalArgumentException("time type value can't be " + type.toString());
+        }
         clearEditColumn();
     }
 

@@ -76,13 +76,12 @@ public class MainFragment extends Fragment implements ChangeValue{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-//        view.findViewById(R.id.camera_frame_duration)
-//                .setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        callChangeValue(mVideo, mCamera,
-//                                ValueForChange.CAMERA_FRAME_DURATION);
-//                    }
-//                });
+        view.findViewById(R.id.camera_frame_duration)
+                .setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        callChangeCameraFrameDuration(mCalc.getCamera().getFrameDuration());
+                    }
+                });
 //        view.findViewById(R.id.camera_record_duration)
 //                .setOnClickListener(new View.OnClickListener() {
 //                    public void onClick(View v) {
@@ -121,6 +120,12 @@ public class MainFragment extends Fragment implements ChangeValue{
         updateValues(view, getResources(), mCalc.getCamera(), mCalc.getVideo());
     }
 
+    public void callChangeCameraFrameDuration(Duration time) {
+        if (mListener != null) {
+            mListener.onChangeCameraFrameDurationClick(time);
+        }
+    }
+
     public void callChangeCameraFrames(long sumOfFrames) {
         if ( mListener != null ) {
             mListener.onChangeCameraSumOfFramesClick(sumOfFrames);
@@ -131,6 +136,12 @@ public class MainFragment extends Fragment implements ChangeValue{
         if (mListener != null) {
             mListener.onChangeVideoFrameRateClick(frameRate);
         }
+    }
+
+    @Override
+    public void setCameraFrameDuration(Duration time, ValueForChange recount) {
+        mCalc.setCameraFrameDuration(time, recount);
+        updateValues(mCalc.getCamera(), mCalc.getVideo());
     }
 
     @Override
@@ -224,6 +235,8 @@ public class MainFragment extends Fragment implements ChangeValue{
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnChangeValueListener {
+
+        public void onChangeCameraFrameDurationClick(Duration time);
 
         public void onChangeVideoFrameRateClick(double frameRate);
 
