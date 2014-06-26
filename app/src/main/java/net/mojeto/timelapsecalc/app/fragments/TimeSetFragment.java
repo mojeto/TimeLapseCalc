@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,6 +26,7 @@ public abstract class TimeSetFragment extends Fragment {
     public abstract String[] getSpinnerItems();
     public abstract CharSequence getEditText();
     public abstract ValueForChange getValueType();
+    public abstract boolean isShowDays();
 
     private static final String ARG_TIME = "time";
     private static final String ARG_RECOUNT = "recount";
@@ -57,8 +59,14 @@ public abstract class TimeSetFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_time_set, container, false);
 
+        if (isShowDays()) {
+            ((ViewStub) view.findViewById(R.id.days_stub)).inflate();
+            ((EditText) view.findViewById(R.id.edit_days))
+                    .setText(String.valueOf(mTime.getDays(true)));
+        }
+
         ((EditText) view.findViewById(R.id.edit_hours))
-                .setText(String.valueOf(mTime.getHours(true)));
+                .setText(String.valueOf(mTime.getHours(!isShowDays())));
 
         ((EditText) view.findViewById(R.id.edit_minutes))
                 .setText(String.valueOf(mTime.getMinutes()));
@@ -105,11 +113,14 @@ public abstract class TimeSetFragment extends Fragment {
 
     public void onClickOk(View view) {
 
-        mTime = new Duration()
-                .setHours(getValueOf(R.id.edit_hours))
-                .setMinutes(getValueOf(R.id.edit_minutes))
-                .setSeconds(getValueOf(R.id.edit_seconds))
-                .setMilliseconds(getValueOf(R.id.edit_milliseconds));
+        mTime = new Duration();
+        if (isShowDays()) {
+            mTime = mTime.setDays(getValueOf(R.id.edit_days));
+        }
+        mTime = mTime.setHours(getValueOf(R.id.edit_hours))
+                     .setMinutes(getValueOf(R.id.edit_minutes))
+                     .setSeconds(getValueOf(R.id.edit_seconds))
+                     .setMilliseconds(getValueOf(R.id.edit_milliseconds));
 
         mPosition = ((Spinner) getView().findViewById(R.id.spinner)).getSelectedItemPosition();
 

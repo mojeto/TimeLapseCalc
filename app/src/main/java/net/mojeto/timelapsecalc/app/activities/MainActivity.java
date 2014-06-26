@@ -13,6 +13,7 @@ import net.mojeto.timelapsecalc.app.Duration;
 import net.mojeto.timelapsecalc.app.R;
 import net.mojeto.timelapsecalc.app.ValueForChange;
 import net.mojeto.timelapsecalc.app.fragments.CameraFrameDurationFragment;
+import net.mojeto.timelapsecalc.app.fragments.CameraRecordDurationFragment;
 import net.mojeto.timelapsecalc.app.fragments.FrameRateFragment;
 import net.mojeto.timelapsecalc.app.fragments.MainFragment;
 import net.mojeto.timelapsecalc.app.fragments.SumOfFramesFragment;
@@ -25,6 +26,7 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
     private static final int REQUEST_VIDEO_FRAME_RATE = 1;
     private static final int REQUEST_CAMERA_SUM_OF_FRAMES = 2;
     private static final int REQUEST_CAMERA_FRAME_DURATION = 3;
+    private static final int REQUEST_CAMERA_RECORD_DURATION = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,13 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
                         ValueForChange.CAMERA_FRAME_DURATION,
                         (ValueForChange) data.getSerializableExtra(TimeSetActivity.EXTRA_RECOUNT));
                 break;
+            case REQUEST_CAMERA_RECORD_DURATION:
+                if(resultCode != RESULT_OK)
+                    return;
+                onTimeSetChange(new Duration(data.getDoubleExtra(TimeSetActivity.EXTRA_TIME, 0)),
+                        ValueForChange.CAMERA_RECORD_DURATION,
+                        (ValueForChange) data.getSerializableExtra(TimeSetActivity.EXTRA_RECOUNT));
+                break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
@@ -110,6 +119,20 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
     }
 
     //Implements MainFragment.OnChangeValueListener methods
+
+    @Override
+    public void onChangeCameraRecordDurationClick(Duration time) {
+        ValueForChange recount = ValueForChange.VIDEO_DURATION;
+        if (useEditFragment()) {
+            setEditFragment(CameraRecordDurationFragment.newInstance(time, recount));
+        } else {
+            Intent request = new Intent(this, TimeSetActivity.class);
+            request.putExtra(TimeSetActivity.EXTRA_TIME, time.getValue());
+            request.putExtra(TimeSetActivity.EXTRA_RECOUNT, recount);
+            request.putExtra(TimeSetActivity.EXTRA_TYPE, ValueForChange.CAMERA_RECORD_DURATION);
+            startActivityForResult(request, REQUEST_CAMERA_RECORD_DURATION);
+        }
+    }
 
     @Override
     public void onChangeCameraFrameDurationClick(Duration time) {
@@ -164,6 +187,9 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
         switch (type) {
             case CAMERA_FRAME_DURATION:
                 getChangeValue().setCameraFrameDuration(time, recount);
+                break;
+            case CAMERA_RECORD_DURATION:
+                getChangeValue().setCameraRecordDuration(time, recount);
                 break;
             default:
                 throw new IllegalArgumentException("time type value can't be " + type.toString());

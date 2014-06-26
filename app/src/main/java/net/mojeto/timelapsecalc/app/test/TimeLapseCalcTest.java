@@ -47,6 +47,32 @@ public class TimeLapseCalcTest extends TestCase {
         assertEquals(new Duration(48000), mCalc.getVideo().getDuration());
     }
 
+    public void testSetCameraRecordDuration() {
+        mCalc.setCameraRecordDuration(new Duration(30000), ValueForChange.CAMERA_FRAME_DURATION);
+        assertEquals(new Duration(30000), mCalc.getCamera().getDuration());
+        assertEquals(new Duration(50), mCalc.getCamera().getFrameDuration());
+        assertEquals(600, mCalc.getCamera().getSumOfFrames());
+        assertEquals(new Duration(24000), mCalc.getVideo().getDuration());
+        assertEquals(new Duration(40l), mCalc.getVideo().getFrameDuration());
+        assertEquals(600, mCalc.getVideo().getSumOfFrames());
+
+        mCalc.setCameraRecordDuration(new Duration(100000), ValueForChange.VIDEO_DURATION);
+        assertEquals(new Duration(100000), mCalc.getCamera().getDuration());
+        assertEquals(new Duration(50), mCalc.getCamera().getFrameDuration());
+        assertEquals(2000, mCalc.getCamera().getSumOfFrames());
+        assertEquals(new Duration(80000), mCalc.getVideo().getDuration());
+        assertEquals(new Duration(40l), mCalc.getVideo().getFrameDuration());
+        assertEquals(2000, mCalc.getVideo().getSumOfFrames());
+
+        mCalc.setCameraRecordDuration(new Duration(50000), ValueForChange.VIDEO_FRAME_RATE);
+        assertEquals(new Duration(50000), mCalc.getCamera().getDuration());
+        assertEquals(new Duration(50), mCalc.getCamera().getFrameDuration());
+        assertEquals(1000, mCalc.getCamera().getSumOfFrames());
+        assertEquals(new Duration(80000), mCalc.getVideo().getDuration());
+        assertEquals(new Duration(80l), mCalc.getVideo().getFrameDuration());
+        assertEquals(1000, mCalc.getVideo().getSumOfFrames());
+    }
+
     public void testSetSumOfFrames() {
         mCalc.setSumOfFrames(1000, ValueForChange.CAMERA_RECORD_DURATION, ValueForChange.VIDEO_DURATION);
         assertEquals(new Duration(2000l), mCalc.getCamera().getFrameDuration());

@@ -7,14 +7,14 @@ import net.mojeto.timelapsecalc.app.ValueForChange;
 /**
  * Created by honza on 26.6.14.
  */
-public class CameraFrameDurationFragment extends TimeSetFragment {
+public class CameraRecordDurationFragment extends TimeSetFragment {
 
-    public CameraFrameDurationFragment() {
-
+    public CameraRecordDurationFragment() {
+        //fragment empty constructor
     }
 
-    public static CameraFrameDurationFragment newInstance(Duration time, ValueForChange recount) {
-        CameraFrameDurationFragment fragment = new CameraFrameDurationFragment();
+    public static CameraRecordDurationFragment newInstance(Duration time, ValueForChange recount) {
+        CameraRecordDurationFragment fragment = new CameraRecordDurationFragment();
         TimeSetFragment.setArguments(fragment, time, recount);
         return fragment;
     }
@@ -22,7 +22,7 @@ public class CameraFrameDurationFragment extends TimeSetFragment {
     @Override
     public int recountToSpinnerPosition(ValueForChange recount) {
         switch (recount) {
-            case CAMERA_RECORD_DURATION:
+            case CAMERA_FRAME_DURATION:
             default:
                 return 0;
             case VIDEO_FRAME_RATE:
@@ -36,7 +36,7 @@ public class CameraFrameDurationFragment extends TimeSetFragment {
     public ValueForChange spinnerPositionToRecount(int position) {
         switch (position) {
             case 0:
-                return ValueForChange.CAMERA_RECORD_DURATION;
+                return ValueForChange.CAMERA_FRAME_DURATION;
             case 1:
             default:
                 return ValueForChange.VIDEO_FRAME_RATE;
@@ -47,21 +47,21 @@ public class CameraFrameDurationFragment extends TimeSetFragment {
 
     @Override
     public String[] getSpinnerItems() {
-        return getResources().getStringArray(R.array.camera_frame_duration_names);
+        return getResources().getStringArray(R.array.camera_record_duration_names);
     }
 
     @Override
     public CharSequence getEditText() {
-        return getResources().getText(R.string.edit_camera_frame_duration);
+        return getResources().getText(R.string.edit_camera_record_duration);
     }
 
     @Override
     public ValueForChange getValueType() {
-        return ValueForChange.CAMERA_FRAME_DURATION;
+        return ValueForChange.CAMERA_RECORD_DURATION;
     }
 
     @Override
     public boolean isShowDays() {
-        return false;
+        return true;
     }
 }

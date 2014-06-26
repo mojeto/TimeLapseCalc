@@ -29,6 +29,8 @@
     <string name="recount_sum_and_video_duration">Sum of photos and video clip duration</string>
 
     <string name="edit_camera_frame_duration">Edit camera shot interval</string>
+    <string name="edit_camera_record_duration">Edit camera record duration</string>
+    <string name="text_days">Days</string>
     <string name="text_hours">Hours</string>
     <string name="text_minutes">Minutes</string>
     <string name="text_seconds">Seconds</string>
