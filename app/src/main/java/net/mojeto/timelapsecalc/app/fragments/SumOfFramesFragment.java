@@ -92,7 +92,7 @@ public class SumOfFramesFragment extends Fragment {
                 return ValueForChange.VIDEO_FRAME_RATE;
             case 1:
             default:
-                return ValueForChange.CAMERA_RECORD_DURATION;
+                return ValueForChange.VIDEO_DURATION;
         }
     }
 
