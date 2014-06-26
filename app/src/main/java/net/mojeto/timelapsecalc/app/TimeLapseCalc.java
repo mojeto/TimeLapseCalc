@@ -9,6 +9,8 @@ public class TimeLapseCalc {
     private final Video mVideo;
 
     public TimeLapseCalc(Camera camera, Video video) {
+        if (camera.getSumOfFrames() != video.getSumOfFrames())
+            throw new IllegalArgumentException("camera and video must have equal sum of frames");
         mCamera = camera;
         mVideo = video;
     }
@@ -22,85 +24,72 @@ public class TimeLapseCalc {
     }
 
     public void setCameraFrameDuration(Duration time, ValueForChange recount) {
-        Duration cameraDuration;
         switch(recount) {
             case CAMERA_RECORD_DURATION:
-                mCamera.setFrameDuration(time);
+                mCamera.setFrameDuration(time, FrameSet.Change.DURATION);
                 break;
             case VIDEO_FRAME_RATE:
-                cameraDuration = mCamera.getDuration();
-                mCamera.setFrameDuration(time);
-                mCamera.setDuration(cameraDuration, FrameSet.Change.SUM_OF_FRAMES);
-                Duration videoDuration = mVideo.getDuration();
-                mVideo.setSumOfFrames(mCamera.getSumOfFrames());
-                mVideo.setDuration(videoDuration, FrameSet.Change.FRAME_DURATION);
+                mCamera.setFrameDuration(time, FrameSet.Change.SUM_OF_FRAMES);
+                mVideo.setSumOfFrames(mCamera.getSumOfFrames(), FrameSet.Change.FRAME_DURATION);
                 break;
             case VIDEO_DURATION:
-                cameraDuration = mCamera.getDuration();
-                mCamera.setFrameDuration(time);
-                mCamera.setDuration(cameraDuration, FrameSet.Change.SUM_OF_FRAMES);
-                mVideo.setSumOfFrames(mCamera.getSumOfFrames());
+                mCamera.setFrameDuration(time, FrameSet.Change.SUM_OF_FRAMES);
+                mVideo.setSumOfFrames(mCamera.getSumOfFrames(), FrameSet.Change.DURATION);
                 break;
             default:
                 throw new IllegalArgumentException(
-                        "Can't set camera frame duration and recount " + recount.toString());
+                    "recount must be CAMERA_RECORD_DURATION or VIDEO_FRAME_RATE or VIDEO_DURATION");
         }
     }
 
-    public void setVideoFrameRateChangeCameraFrameDuration(double frameRate) {
-        //set video frame rate change sum of frames
-        Duration videoDuration = mVideo.getDuration();
-        mVideo.setFrameRate(frameRate);
-        mVideo.setDuration(videoDuration, FrameSet.Change.SUM_OF_FRAMES);
+    public void setSumOfFrames(long sumOfFrames, ValueForChange cameraRecount,
+                               ValueForChange videoRecount) {
+        FrameSet.Change cameraChange, videoChange;
 
-        //set camera sum of frames change frame duration
-        Duration cameraDuration = mCamera.getDuration();
-        mCamera.setSumOfFrames(mVideo.getSumOfFrames());
-        mCamera.setDuration(cameraDuration, FrameSet.Change.FRAME_DURATION);
+        switch (cameraRecount) {
+            case CAMERA_FRAME_DURATION:
+                cameraChange = FrameSet.Change.FRAME_DURATION;
+                break;
+            case CAMERA_RECORD_DURATION:
+                cameraChange = FrameSet.Change.DURATION;
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        "camera recount must be CAMERA_RECORD_DURATION or CAMERA_FRAME_DURATION");
+        }
+
+        switch (videoRecount) {
+            case VIDEO_DURATION:
+                videoChange = FrameSet.Change.DURATION;
+                break;
+            case VIDEO_FRAME_RATE:
+                videoChange = FrameSet.Change.FRAME_DURATION;
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        "video recount must be VIDEO_DURATION or VIDEO_FRAME_RATE");
+        }
+
+        mCamera.setSumOfFrames(sumOfFrames, cameraChange);
+        mVideo.setSumOfFrames(sumOfFrames, videoChange);
     }
 
-    public void setVideoFrameRateChangeCameraDuration(double frameRate) {
-        //set video frame rate change sum of frames
-        Duration videoDuration = mVideo.getDuration();
-        mVideo.setFrameRate(frameRate);
-        mVideo.setDuration(videoDuration, FrameSet.Change.SUM_OF_FRAMES);
-
-        //set camera sum of frames, change frame rate
-        mCamera.setSumOfFrames(mVideo.getSumOfFrames());
-    }
-
-    public void setVideoFrameRateChangeVideoDuration(double frameRate) {
-        mVideo.setFrameRate(frameRate);
-    }
-
-    public void setCameraSumChangeCameraAndVideoFrameDuration(long sumOfFrames) {
-        Duration cameraDuration = mCamera.getDuration();
-        mCamera.setSumOfFrames(sumOfFrames);
-        mCamera.setDuration(cameraDuration, FrameSet.Change.FRAME_DURATION);
-
-        Duration videoDuration = mVideo.getDuration();
-        mVideo.setSumOfFrames(sumOfFrames);
-        mVideo.setDuration(videoDuration, FrameSet.Change.FRAME_DURATION);
-    }
-
-    public void setCameraSumChangeCameraFrameDurationAndVideoDuration(long sumOfFrames) {
-        Duration cameraDuration = mCamera.getDuration();
-        mCamera.setSumOfFrames(sumOfFrames);
-        mCamera.setDuration(cameraDuration, FrameSet.Change.FRAME_DURATION);
-
-        mVideo.setSumOfFrames(sumOfFrames);
-    }
-
-    public void setCameraSumChangeCameraDurationAndVideoFrameDuration(long sumOfFrames) {
-        mCamera.setSumOfFrames(sumOfFrames);
-
-        Duration videoDuration = mVideo.getDuration();
-        mVideo.setSumOfFrames(sumOfFrames);
-        mVideo.setDuration(videoDuration, FrameSet.Change.FRAME_DURATION);
-    }
-
-    public void setCameraSumChangeCameraAndVideoDuration(long sumOfFrames) {
-        mCamera.setSumOfFrames(sumOfFrames);
-        mVideo.setSumOfFrames(sumOfFrames);
+    public void setVideoFrameRate(double frameRate, ValueForChange recount) {
+        switch (recount) {
+            case CAMERA_FRAME_DURATION:
+                mVideo.setFrameRate(frameRate, FrameSet.Change.SUM_OF_FRAMES);
+                mCamera.setSumOfFrames(mVideo.getSumOfFrames(), FrameSet.Change.FRAME_DURATION);
+                break;
+            case CAMERA_RECORD_DURATION:
+                mVideo.setFrameRate(frameRate, FrameSet.Change.SUM_OF_FRAMES);
+                mCamera.setSumOfFrames(mVideo.getSumOfFrames(), FrameSet.Change.DURATION);
+                break;
+            case VIDEO_DURATION:
+                mVideo.setFrameRate(frameRate, FrameSet.Change.DURATION);
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        "recount must be CAMERA_RECORD_DURATION or CAMERA_FRAME_DURATION or VIDEO_DURATION");
+        }
     }
 }

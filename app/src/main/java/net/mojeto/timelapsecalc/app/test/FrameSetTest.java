@@ -13,48 +13,48 @@ public class FrameSetTest extends TestCase {
     public void testFrameDuration() {
         FrameSet fr = new FrameSet(40, 1000);
         assertEquals(new Duration(40), fr.getFrameDuration());
+        assertEquals(1000, fr.getSumOfFrames());
+        assertEquals(new Duration(40000), fr.getDuration());
 
-        fr.setFrameDuration(new Duration(50.3));
+        fr.setFrameDuration(new Duration(50.3), FrameSet.Change.DURATION);
         assertEquals(new Duration(50.3), fr.getFrameDuration());
+        assertEquals(1000, fr.getSumOfFrames());
+        assertEquals(new Duration(50300), fr.getDuration());
 
-        fr.setFrameRate(29.9);
-        assertEquals(new Duration(1000/29.9), fr.getFrameDuration());
-
-        fr.setDuration(new Duration(50000), FrameSet.Change.FRAME_DURATION);
-        // duration/sum of frames = 50000/1000 = duration(50)
-        assertEquals(new Duration(50), fr.getFrameDuration());
-        assertEquals(new Duration(50000), fr.getDuration());
+        fr.setFrameDuration(new Duration(25.0), FrameSet.Change.SUM_OF_FRAMES);
+        assertEquals(new Duration(25.0), fr.getFrameDuration());
+        assertEquals(2012, fr.getSumOfFrames());
+        assertEquals(new Duration(50300), fr.getDuration());
     }
 
     public void testFrameRate() {
         FrameSet fr = new FrameSet(40, 1000);
         assertEquals(25.0, fr.getFrameRate());
 
-        fr.setFrameRate(23.4);
-        assertEquals(23.4, fr.getFrameRate());
-        // sum of frames/frame rate = 1000/23.4
-        assertEquals(new Duration(1000/23.4), fr.getFrameDuration());
-
-        fr.setFrameDuration(new Duration(50));
-        // 1000ms/frame duration = frames per second = 1000/50 = 20
+        fr.setFrameRate(20.0, FrameSet.Change.DURATION);
         assertEquals(20.0, fr.getFrameRate());
+        assertEquals(1000, fr.getSumOfFrames());
+        assertEquals(new Duration(50000), fr.getDuration());
 
-        fr.setDuration(new Duration(50000), FrameSet.Change.FRAME_DURATION);
-        // duration/sum of frames = 50000/1000 = duration(50)
-        assertEquals(new Duration(50), fr.getFrameDuration());
-
+        fr.setFrameRate(10.0, FrameSet.Change.SUM_OF_FRAMES);
+        assertEquals(10.0, fr.getFrameRate());
+        assertEquals(500, fr.getSumOfFrames());
+        assertEquals(new Duration(50000), fr.getDuration());
     }
 
     public void testDuration() {
         FrameSet fr = new FrameSet(40, 1000);
         assertEquals(new Duration(40000), fr.getDuration());
 
+        fr.setDuration(new Duration(50000), FrameSet.Change.FRAME_DURATION);
+        assertEquals(new Duration(50000), fr.getDuration());
         assertEquals(1000, fr.getSumOfFrames());
-        assertEquals(new Duration(40), fr.getFrameDuration());
-        fr.setDuration(new Duration(50000), FrameSet.Change.SUM_OF_FRAMES);
-        assertEquals(1250, fr.getSumOfFrames());
-        assertEquals(new Duration(40), fr.getFrameDuration());
+        assertEquals(new Duration(50), fr.getFrameDuration());
 
+        fr.setDuration(new Duration(30000), FrameSet.Change.SUM_OF_FRAMES);
+        assertEquals(new Duration(30000), fr.getDuration());
+        assertEquals(600, fr.getSumOfFrames());
+        assertEquals(new Duration(50), fr.getFrameDuration());
     }
 
 }

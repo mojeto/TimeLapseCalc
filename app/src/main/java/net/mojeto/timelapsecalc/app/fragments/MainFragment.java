@@ -28,9 +28,8 @@ import static java.lang.Math.round;
 public class MainFragment extends Fragment implements ChangeValue{
 
     private static final String ARG_CAMERA_FRAME_DURATION = "cameraFrameDuration";
-    private static final String ARG_CAMERA_FRAMES = "cameraFrames";
     private static final String ARG_VIDEO_FRAME_DURATION = "videoFrameDuration";
-    private static final String ARG_VIDEO_FRAMES = "videoFrames";
+    private static final String ARG_FRAMES = "frames";
 
     private TimeLapseCalc mCalc;
 
@@ -46,19 +45,17 @@ public class MainFragment extends Fragment implements ChangeValue{
         Video video = mCalc.getVideo();
         Camera camera = mCalc.getCamera();
         outState.putDouble(ARG_VIDEO_FRAME_DURATION, video.getFrameDuration().getValue());
-        outState.putLong(ARG_VIDEO_FRAMES, video.getSumOfFrames());
         outState.putDouble(ARG_CAMERA_FRAME_DURATION, camera.getFrameDuration().getValue());
-        outState.putLong(ARG_CAMERA_FRAMES, camera.getSumOfFrames());
+        outState.putLong(ARG_FRAMES, camera.getSumOfFrames());
 
     }
 
     public void loadSaveInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
+            long frames = savedInstanceState.getLong(ARG_FRAMES);
             mCalc = new TimeLapseCalc(
-                        new Camera(savedInstanceState.getDouble(ARG_CAMERA_FRAME_DURATION),
-                                   savedInstanceState.getLong(ARG_CAMERA_FRAMES)),
-                        new Video(savedInstanceState.getDouble(ARG_VIDEO_FRAME_DURATION),
-                                  savedInstanceState.getLong(ARG_VIDEO_FRAMES)));
+                        new Camera(savedInstanceState.getDouble(ARG_CAMERA_FRAME_DURATION), frames),
+                        new Video(savedInstanceState.getDouble(ARG_VIDEO_FRAME_DURATION), frames));
         } else {
             mCalc = new TimeLapseCalc(new Camera(2000l, 600), new Video(40l, 600));
         }
@@ -146,40 +143,14 @@ public class MainFragment extends Fragment implements ChangeValue{
 
     @Override
     public void setVideoFrameRate(double frameRate, ValueForChange recount) {
-        switch (recount) {
-            case CAMERA_FRAME_DURATION:
-                mCalc.setVideoFrameRateChangeCameraFrameDuration(frameRate);
-                break;
-            case CAMERA_RECORD_DURATION:
-                mCalc.setVideoFrameRateChangeCameraDuration(frameRate);
-            case VIDEO_DURATION:
-            default:
-                mCalc.setVideoFrameRateChangeVideoDuration(frameRate);
-                break;
-        }
+        mCalc.setVideoFrameRate(frameRate, recount);
         updateValues(mCalc.getCamera(), mCalc.getVideo());
     }
 
     @Override
     public void setCameraSumOfFrames(long sumOfFrames, ValueForChange cameraRecount,
                                      ValueForChange videoRecount) {
-        switch (cameraRecount) {
-            case CAMERA_FRAME_DURATION:
-                if (videoRecount == ValueForChange.VIDEO_FRAME_RATE) {
-                    mCalc.setCameraSumChangeCameraAndVideoFrameDuration(sumOfFrames);
-                } else {
-                    mCalc.setCameraSumChangeCameraFrameDurationAndVideoDuration(sumOfFrames);
-                }
-                break;
-            case CAMERA_RECORD_DURATION:
-            default:
-                if (videoRecount == ValueForChange.VIDEO_FRAME_RATE) {
-                    mCalc.setCameraSumChangeCameraDurationAndVideoFrameDuration(sumOfFrames);
-                } else {
-                    mCalc.setCameraSumChangeCameraAndVideoDuration(sumOfFrames);
-                }
-                break;
-        }
+        mCalc.setSumOfFrames(sumOfFrames, cameraRecount, videoRecount);
         updateValues(mCalc.getCamera(), mCalc.getVideo());
     }
 
