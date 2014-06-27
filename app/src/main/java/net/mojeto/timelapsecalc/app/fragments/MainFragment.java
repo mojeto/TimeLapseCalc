@@ -91,21 +91,18 @@ public class MainFragment extends Fragment implements ChangeValue{
                         callChangeCameraFrames(mCalc.getCamera().getSumOfFrames());
                     }
                 });
-//
         view.findViewById(R.id.video_frame_rate)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         callChangeFrameRate(mCalc.getVideo().getFrameRate());
                     }
                 });
-//
-//        view.findViewById(R.id.video_duration)
-//                .setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        callChangeValue(mVideo, mCamera,
-//                                ValueForChange.VIDEO_DURATION);
-//                    }
-//                });
+        view.findViewById(R.id.video_duration)
+                .setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        callChangeVideoDuration(mCalc.getVideo().getDuration());
+                    }
+                });
 
         return view;
     }
@@ -140,6 +137,12 @@ public class MainFragment extends Fragment implements ChangeValue{
         }
     }
 
+    public void callChangeVideoDuration(Duration time) {
+        if (mListener != null) {
+            mListener.onChangeVideoDurationClick(time);
+        }
+    }
+
     @Override
     public void setCameraFrameDuration(Duration time, ValueForChange recount) {
         mCalc.setCameraFrameDuration(time, recount);
@@ -149,6 +152,12 @@ public class MainFragment extends Fragment implements ChangeValue{
     @Override
     public void setCameraRecordDuration(Duration time, ValueForChange recount) {
         mCalc.setCameraRecordDuration(time, recount);
+        updateValues(mCalc.getCamera(), mCalc.getVideo());
+    }
+
+    @Override
+    public void setVideoDuration(Duration time, ValueForChange recount) {
+        mCalc.setVideoDuration(time, recount);
         updateValues(mCalc.getCamera(), mCalc.getVideo());
     }
 
@@ -223,6 +232,8 @@ public class MainFragment extends Fragment implements ChangeValue{
         public void onChangeCameraFrameDurationClick(Duration time);
 
         public void onChangeVideoFrameRateClick(double frameRate);
+
+        public void onChangeVideoDurationClick(Duration time);
 
         public void onChangeCameraSumOfFramesClick(long sumOfFrames);
     }

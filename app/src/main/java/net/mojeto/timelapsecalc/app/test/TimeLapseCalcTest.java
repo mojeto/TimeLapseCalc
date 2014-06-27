@@ -116,4 +116,30 @@ public class TimeLapseCalcTest extends TestCase {
         assertEquals(600, mCalc.getCamera().getSumOfFrames());
         assertEquals(new Duration(600000), mCalc.getCamera().getDuration());
     }
+
+    public void testSetVideoDuration() {
+        mCalc.setVideoDuration(new Duration(48000), ValueForChange.VIDEO_FRAME_RATE);
+        assertEquals(new Duration(48000), mCalc.getVideo().getDuration());
+        assertEquals(new Duration(80), mCalc.getVideo().getFrameDuration());
+        assertEquals(600, mCalc.getVideo().getSumOfFrames());
+        assertEquals(new Duration(1200000), mCalc.getCamera().getDuration());
+        assertEquals(new Duration(2000), mCalc.getCamera().getFrameDuration());
+        assertEquals(600, mCalc.getCamera().getSumOfFrames());
+
+        mCalc.setVideoDuration(new Duration(50000), ValueForChange.CAMERA_RECORD_DURATION);
+        assertEquals(new Duration(50000), mCalc.getVideo().getDuration());
+        assertEquals(new Duration(80), mCalc.getVideo().getFrameDuration());
+        assertEquals(625, mCalc.getVideo().getSumOfFrames());
+        assertEquals(new Duration(1250000), mCalc.getCamera().getDuration());
+        assertEquals(new Duration(2000), mCalc.getCamera().getFrameDuration());
+        assertEquals(625, mCalc.getCamera().getSumOfFrames());
+
+        mCalc.setVideoDuration(new Duration(20000), ValueForChange.CAMERA_FRAME_DURATION);
+        assertEquals(new Duration(20000), mCalc.getVideo().getDuration());
+        assertEquals(new Duration(80), mCalc.getVideo().getFrameDuration());
+        assertEquals(250, mCalc.getVideo().getSumOfFrames());
+        assertEquals(new Duration(1250000), mCalc.getCamera().getDuration());
+        assertEquals(new Duration(5000), mCalc.getCamera().getFrameDuration());
+        assertEquals(250, mCalc.getCamera().getSumOfFrames());
+    }
 }

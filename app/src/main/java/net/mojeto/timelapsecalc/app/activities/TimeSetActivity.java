@@ -13,6 +13,7 @@ import net.mojeto.timelapsecalc.app.ValueForChange;
 import net.mojeto.timelapsecalc.app.fragments.CameraFrameDurationFragment;
 import net.mojeto.timelapsecalc.app.fragments.CameraRecordDurationFragment;
 import net.mojeto.timelapsecalc.app.fragments.TimeSetFragment;
+import net.mojeto.timelapsecalc.app.fragments.VideoDurationFragment;
 
 public class TimeSetActivity extends ActionBarActivity implements
         TimeSetFragment.OnTimeSetChangeListener{
@@ -37,6 +38,9 @@ public class TimeSetActivity extends ActionBarActivity implements
                     break;
                 case CAMERA_RECORD_DURATION:
                     fragment = CameraRecordDurationFragment.newInstance(time, recount);
+                    break;
+                case VIDEO_DURATION:
+                    fragment = VideoDurationFragment.newInstance(time, recount);
                     break;
                 default:
                     setResult(RESULT_CANCELED);

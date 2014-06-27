@@ -7,6 +7,7 @@ public interface ChangeValue {
 
     public void setCameraFrameDuration(Duration time, ValueForChange recount);
     public void setCameraRecordDuration(Duration time, ValueForChange recount);
+    public void setVideoDuration(Duration time, ValueForChange recount);
     public void setVideoFrameRate(double frameRate, ValueForChange recount);
     public void setCameraSumOfFrames(long sumOfFrames, ValueForChange cameraRecount,
                                      ValueForChange videoRecount);

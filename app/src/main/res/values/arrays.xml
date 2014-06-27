@@ -23,4 +23,9 @@
         <item>@string/recount_sum_and_video_frame_rate</item>
         <item>@string/recount_sum_and_video_duration</item>
     </string-array>
+    <string-array name="video_duration_names">
+        <item>@string/recount_camera_sum_and_frame_duration</item>
+        <item>@string/recount_camera_sum_and_duration</item>
+        <item>@string/recount_video_frame_rate</item>
+    </string-array>
 </resources>
