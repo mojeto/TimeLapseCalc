@@ -14,8 +14,8 @@
     <string name="edit_frame_rate_value">%1$d</string>
     <string name="video_frame_rate_value">%1$02d frames per second</string>
     <string name="video_duration">Clip duration</string>
-    <string name="duration_with_days">%1$d days %2$02d:%3$02d:%4$02d:%5$03d</string>
-    <string name="duration_with_hours">%1$02d:%2$02d:%3$02d:%4$03d</string>
+    <string name="duration_with_days">%1$d days %2$02d:%3$02d:%4$02d.%5$03d</string>
+    <string name="duration_with_hours">%1$02d:%2$02d:%3$02d.%4$03d</string>
     <string name="text_ok">Ok</string>
     <string name="text_cancel">Cancel</string>
     <string name="choose_affect">Changing value will affect:</string>

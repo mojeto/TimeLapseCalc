@@ -180,10 +180,10 @@ public class MainFragment extends Fragment implements ChangeValue{
 
     public void updateValues(View view, Resources r, Camera camera, Video video) {
         ((TextView) view.findViewById(R.id.camera_frame_duration))
-                .setText(camera.getFrameDuration().format(r, Duration.Format.WITH_HOURS));
+                .setText(camera.getFrameDuration().format(r));
 
         ((TextView) view.findViewById(R.id.camera_record_duration))
-                .setText(camera.getDuration().format(r, Duration.Format.WITH_DAYS));
+                .setText(camera.getDuration().format(r));
 
         ((TextView) view.findViewById(R.id.camera_frames))
                 .setText(String.format(r.getString(R.string.camera_frames_value),
@@ -194,7 +194,7 @@ public class MainFragment extends Fragment implements ChangeValue{
                         round(video.getFrameRate())));
 
         ((TextView) view.findViewById(R.id.video_duration))
-                .setText(video.getDuration().format(r, Duration.Format.WITH_DAYS));
+                .setText(video.getDuration().format(r));
     }
 
     @Override

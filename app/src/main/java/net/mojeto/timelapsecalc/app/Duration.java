@@ -139,6 +139,14 @@ public class Duration {
         return new Duration(value + (years - getYears()) * 31600000000l);
     }
 
+    public String format(Resources r) {
+        if ( getDays(true) > 0) {
+            return format(r, Format.WITH_DAYS);
+        }
+        else {
+            return format(r, Format.WITH_HOURS);
+        }
+    }
 
     public String format(Resources r, Format format) {
         switch (format) {
