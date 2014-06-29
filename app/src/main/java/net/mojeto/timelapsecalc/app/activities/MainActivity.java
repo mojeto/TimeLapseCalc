@@ -56,7 +56,8 @@ public class MainActivity extends ActionBarActivity implements MainFragment.OnCh
     }
 
     public boolean useEditFragment() {
-        return findViewById(R.id.edit_column) != null;
+        //return findViewById(R.id.edit_column) != null;
+        return getResources().getBoolean(R.bool.has_edit_column);
     }
 
     public ChangeValue getChangeValue() {

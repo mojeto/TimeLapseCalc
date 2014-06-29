@@ -10,147 +10,70 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:gravity="center">
-
+            style="@style/FrameSetGroup"
+            android:layout_weight="2">
             <TextView
+                style="@style/TextView.frameSetHeader"
                 android:id="@+id/camera_label"
-                android:text="@string/camera_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:text="@string/camera_label"/>
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
+                style="@style/TextArea">
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
+                    style="@style/TextLine">
                     <TextView
-                        android:text="@string/camera_frame_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center"
-                        android:padding="@dimen/text_padding" />
-
-                    <TextView
-                        android:text="@string/camera_record_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center"
-                        android:padding="@dimen/text_padding" />
-
-                    <TextView
-                        android:text="@string/camera_frames"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center"
-                        android:padding="@dimen/text_padding" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
+                        style="@style/TextView.TextLabel"
+                        android:text="@string/camera_frame_duration" />
                     <TextView
                         android:id="@+id/camera_frame_duration"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/text_padding" />
-
+                        style="@style/TextView.TextValue" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/TextLine">
+                    <TextView
+                        android:text="@string/camera_record_duration"
+                        style="@style/TextView.TextLabel" />
                     <TextView
                         android:id="@+id/camera_record_duration"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/text_padding" />
-
+                        style="@style/TextView.TextValue" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/TextLine">
+                    <TextView
+                        android:text="@string/camera_frames"
+                        style="@style/TextView.TextLabel" />
                     <TextView
                         android:id="@+id/camera_frames"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/text_padding" />
+                        style="@style/TextView.TextValue" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            style="@style/FrameSetGroup"
             android:layout_weight="3"
-            android:orientation="vertical"
-            android:gravity="center">
-
+            android:layout_marginBottom="@dimen/frame_set_margin">
             <TextView
+                style="@style/TextView.frameSetHeader"
                 android:id="@+id/video_label"
-                android:text="@string/video_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:text="@string/video_label" />
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
+                style="@style/TextArea">
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
+                    style="@style/TextLine">
                     <TextView
                         android:text="@string/video_frame_rate"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center"
-                        android:padding="@dimen/text_padding" />
-
-                    <TextView
-                        android:text="@string/video_duration"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center"
-                        android:padding="@dimen/text_padding" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
+                        style="@style/TextView.TextLabel" />
                     <TextView
                         android:id="@+id/video_frame_rate"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/text_padding" />
-
+                        style="@style/TextView.TextValue" />
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/TextLine">
+                    <TextView
+                        android:text="@string/video_duration"
+                        style="@style/TextView.TextLabel" />
                     <TextView
                         android:id="@+id/video_duration"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="0dp"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/text_padding" />
+                        style="@style/TextView.TextValue" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
