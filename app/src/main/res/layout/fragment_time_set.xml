@@ -1,7 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/FrameSetGroup"
     android:orientation="vertical"
     tools:context=".fragments.TimeSetFragment">
 
@@ -11,78 +10,72 @@
         android:layout_weight="1"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/edit_msg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            style="@style/TextView.frameSetHeader"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/edit_msg" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ViewStub android:id="@+id/days_stub"
-                android:inflatedId="@+id/fragment_days"
-                android:layout="@layout/fragment_days"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+            android:orientation="vertical">
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <TextView
-                    android:text="@string/text_hours"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edit_hours"
-                    android:inputType="numberSigned"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                    android:id="@+id/edit_days_label"
+                    style="@style/timeEdit.label"
+                    android:text="@string/text_days"
+                    android:visibility="gone"/>
+                <TextView
+                    style="@style/timeEdit.label"
+                    android:text="@string/text_hours" />
                 <TextView
                     android:text="@string/text_minutes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edit_minutes"
-                    android:inputType="numberSigned"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                    style="@style/timeEdit.label" />
                 <TextView
                     android:text="@string/text_seconds"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edit_seconds"
-                    android:inputType="numberSigned"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                    style="@style/timeEdit.label" />
                 <TextView
                     android:text="@string/text_milliseconds"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    style="@style/timeEdit.label" />
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/timeEdit.cell"
+                    android:id="@+id/edit_days"
+                    android:hint="00"
+                    android:visibility="gone"/>
+                <EditText
+                    style="@style/timeEdit.cell"
+                    android:id="@+id/edit_hours"
+                    android:hint="00"/>
+                <TextView
+                    style="@style/time.colon" />
+                <EditText
+                    style="@style/timeEdit.cell"
+                    android:id="@+id/edit_minutes"
+                    android:hint="00"/>
+                <TextView
+                    style="@style/time.colon" />
+                <EditText
+                    style="@style/timeEdit.cell"
+                    android:id="@+id/edit_seconds"
+                    android:hint="00"/>
+                <TextView
+                    style="@style/time.dot" />
+                <EditText
+                    style="@style/timeEdit.cell"
                     android:id="@+id/edit_milliseconds"
-                    android:inputType="numberSigned"/>
+                    android:imeOptions="actionDone"
+                    android:hint="000"/>
             </LinearLayout>
         </LinearLayout>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/TextView.frameSetHeader"
+            android:layout_gravity="center_horizontal"
             android:text="@string/choose_affect" />
 
         <Spinner
@@ -91,23 +84,6 @@
             android:id="@+id/spinner"></Spinner>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp">
-        <TextView
-            android:id="@+id/button_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/text_cancel"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/button_ok"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/text_ok"
-            android:gravity="center"/>
-    </LinearLayout>
+    <include layout="@layout/include_buttons" />
 
 </LinearLayout>

@@ -1,7 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/FrameSetGroup"
     android:orientation="vertical"
     tools:context=".fragments.SumOfFramesFragment">
     <LinearLayout
@@ -10,19 +9,21 @@
         android:layout_weight="1"
         android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/TextView.frameSetHeader"
+            android:layout_gravity="center_horizontal"
             android:text="@string/edit_sum_of_frames"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_sum"
-            android:inputType="numberSigned"/>
+            android:inputType="number"
+            android:digits="0123456789"
+            android:imeOptions="actionDone"/>
 
         <TextView
-            android:text="@string/choose_affect_camera"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/TextView.frameSetHeader"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/choose_affect_camera" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -31,9 +32,9 @@
             android:entries="@array/sum_camera_recount_names"></Spinner>
 
         <TextView
-            android:text="@string/choose_affect_video"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/TextView.frameSetHeader"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/choose_affect_video" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -41,22 +42,7 @@
             android:id="@+id/spinner_video"
             android:entries="@array/sum_video_recount_names"></Spinner>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp">
-        <TextView
-            android:id="@+id/button_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/text_cancel"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/button_ok"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/text_ok"
-            android:gravity="center"/>
-    </LinearLayout>
+
+    <include layout="@layout/include_buttons" />
+
 </LinearLayout>

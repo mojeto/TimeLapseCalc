@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/button"
+            android:id="@+id/button_cancel"
+            android:text="@string/text_cancel" />
+        <TextView
+            style="@style/button"
+            android:id="@+id/button_ok"
+            android:text="@string/text_ok"
+            android:layout_marginLeft="@dimen/button_horizontal_margin"/>
+    </LinearLayout>
+</LinearLayout>

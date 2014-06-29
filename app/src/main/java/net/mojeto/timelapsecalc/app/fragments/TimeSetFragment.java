@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.mojeto.timelapsecalc.app.Duration;
 import net.mojeto.timelapsecalc.app.R;
@@ -59,14 +59,19 @@ public abstract class TimeSetFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_time_set, container, false);
 
-        if (isShowDays()) {
-            ((ViewStub) view.findViewById(R.id.days_stub)).inflate();
-            ((EditText) view.findViewById(R.id.edit_days))
-                    .setText(String.valueOf(mTime.getDays(true)));
+        long days = isShowDays() ? mTime.getDays(true) : 0l;
+        boolean isShowDays = days > 0;
+
+        if (isShowDays) {
+            ((TextView) view.findViewById(R.id.edit_days_label)).setVisibility(View.VISIBLE);
+
+            EditText text = ((EditText) view.findViewById(R.id.edit_days));
+            text.setVisibility(View.VISIBLE);
+            text.setText(String.valueOf(days));
         }
 
         ((EditText) view.findViewById(R.id.edit_hours))
-                .setText(String.valueOf(mTime.getHours(!isShowDays())));
+                .setText(String.valueOf(mTime.getHours(!isShowDays)));
 
         ((EditText) view.findViewById(R.id.edit_minutes))
                 .setText(String.valueOf(mTime.getMinutes()));
@@ -107,21 +112,33 @@ public abstract class TimeSetFragment extends Fragment {
         }
     }
 
-    protected int getValueOf(int id) {
-        return Integer.valueOf(((EditText) getView().findViewById(id)).getText().toString());
+    protected int getValueOf(int id) throws NumberFormatException {
+        String value = ((EditText) getView().findViewById(id)).getText().toString();
+        try {
+            return value.equals("") ? 0 : Integer.valueOf(value);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(value);
+        }
     }
 
     public void onClickOk(View view) {
 
+        String value = "";
         mTime = new Duration();
-        if (isShowDays()) {
-            mTime = mTime.setDays(getValueOf(R.id.edit_days));
+        try {
+            if (isShowDays()) {
+                mTime = mTime.setDays(getValueOf(R.id.edit_days));
+            }
+            mTime = mTime.setHours(getValueOf(R.id.edit_hours))
+                    .setMinutes(getValueOf(R.id.edit_minutes))
+                    .setSeconds(getValueOf(R.id.edit_seconds))
+                    .setMilliseconds(getValueOf(R.id.edit_milliseconds));
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(),
+                    String.format(getResources().getString(R.string.repair_value), e.getMessage()),
+                    Toast.LENGTH_LONG).show();
+            return;
         }
-        mTime = mTime.setHours(getValueOf(R.id.edit_hours))
-                     .setMinutes(getValueOf(R.id.edit_minutes))
-                     .setSeconds(getValueOf(R.id.edit_seconds))
-                     .setMilliseconds(getValueOf(R.id.edit_milliseconds));
-
         mPosition = ((Spinner) getView().findViewById(R.id.spinner)).getSelectedItemPosition();
 
         if ( mListener != null ) {

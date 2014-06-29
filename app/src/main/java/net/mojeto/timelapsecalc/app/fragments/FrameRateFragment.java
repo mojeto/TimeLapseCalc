@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import net.mojeto.timelapsecalc.app.R;
 import net.mojeto.timelapsecalc.app.ValueForChange;
@@ -92,8 +93,15 @@ public class FrameRateFragment extends Fragment {
     }
 
     public void onClickOk(View view) {
-        mValue = Double.valueOf(((EditText) getView().findViewById(R.id.edit_frame_rate))
-                .getText().toString());
+        String value = ((EditText) getView().findViewById(R.id.edit_frame_rate)).getText().toString();
+        try {
+            mValue = value.equals("") ? 1.0 : Double.valueOf(value);
+        }catch (NumberFormatException e) {
+            Toast.makeText(getActivity(),
+                    String.valueOf(getResources().getString(R.string.repair_value, value)),
+                    Toast.LENGTH_LONG);
+            return;
+        }
 
         mPosition = ((Spinner) getView().findViewById(R.id.spinner)).getSelectedItemPosition();
 

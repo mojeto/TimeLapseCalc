@@ -73,31 +73,31 @@ public class MainFragment extends Fragment implements ChangeValue{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        view.findViewById(R.id.camera_frame_duration)
+        view.findViewById(R.id.camera_frame_duration_line)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         callChangeCameraFrameDuration(mCalc.getCamera().getFrameDuration());
                     }
                 });
-        view.findViewById(R.id.camera_record_duration)
+        view.findViewById(R.id.camera_record_duration_line)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         callChangeCameraRecordDuration(mCalc.getCamera().getDuration());
                     }
                 });
-        view.findViewById(R.id.camera_frames)
+        view.findViewById(R.id.camera_frames_line)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         callChangeCameraFrames(mCalc.getCamera().getSumOfFrames());
                     }
                 });
-        view.findViewById(R.id.video_frame_rate)
+        view.findViewById(R.id.video_frame_rate_line)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         callChangeFrameRate(mCalc.getVideo().getFrameRate());
                     }
                 });
-        view.findViewById(R.id.video_duration)
+        view.findViewById(R.id.video_duration_line)
                 .setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         callChangeVideoDuration(mCalc.getVideo().getDuration());

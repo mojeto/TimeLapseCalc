@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import net.mojeto.timelapsecalc.app.R;
 import net.mojeto.timelapsecalc.app.ValueForChange;
@@ -152,8 +153,15 @@ public class SumOfFramesFragment extends Fragment {
     }
 
     public void onClickOk(View view) {
-        mSum = Long.valueOf(((EditText) getView().findViewById(R.id.edit_sum)).getText()
-                .toString());
+        String value = ((EditText) getView().findViewById(R.id.edit_sum)).getText().toString();
+        try {
+            mSum = value.equals("") ? 1l : Long.valueOf(value);
+        }catch (NumberFormatException e) {
+            Toast.makeText(getActivity(),
+                    String.valueOf(getResources().getString(R.string.repair_value, value)),
+                    Toast.LENGTH_LONG);
+            return;
+        }
 
         mCameraPosition = ((Spinner) getView().findViewById(R.id.spinner_camera))
                 .getSelectedItemPosition();
