@@ -3,21 +3,35 @@
 
     <string name="app_name">Time lapse calc</string>
     <string name="action_settings">Settings</string>
+
     <string name="camera_label">Photo camera</string>
-    <string name="camera_frame_duration">Shot interval </string>
-    <string name="camera_record_duration">Record duration </string>
-    <string name="camera_frames">Sum of shots</string>
+    <string name="camera_frame_duration">Shot interval</string>
+    <string name="camera_record_duration">Record duration</string>
+    <string name="camera_frames">Number of shots</string>
     <string name="camera_frames_value">%1$d</string>
+
     <string name="video_label">Movie clip</string>
     <string name="video_frame_rate">Frame rate</string>
-    <string name="edit_frame_rate">Edit video frame rate</string>
-    <string name="edit_frame_rate_value">%1$d</string>
     <string name="video_frame_rate_value">%1$02d frames per second</string>
     <string name="video_duration">Clip duration</string>
+
+    <string name="edit_camera_frame_duration">Edit camera shot interval</string>
+    <string name="edit_camera_record_duration">Edit camera record duration</string>
+    <string name="edit_sum_of_frames">Edit camera number of shots</string>
+    <string name="edit_frame_rate">Edit video frame rate</string>
+    <string name="edit_frame_rate_value">%1$d</string>
+    <string name="edit_video_duration">Edit video clip duration</string>
+
+    <string name="text_days">day</string>
+    <string name="text_hours">hour</string>
+    <string name="text_minutes">min</string>
+    <string name="text_seconds">sec</string>
+    <string name="text_milliseconds">ms</string>
     <string name="duration_with_days">%1$d days %2$02d:%3$02d:%4$02d.%5$03d</string>
     <string name="duration_with_hours">%1$02d:%2$02d:%3$02d.%4$03d</string>
     <string name="text_ok">Ok</string>
     <string name="text_cancel">Cancel</string>
+
     <string name="recount_camera_frame_duration">Camera shot interval</string>
     <string name="recount_camera_sum_and_frame_duration">Shots &amp; camera interval</string>
     <string name="recount_camera_duration">Camera record duration</string>
@@ -27,23 +41,15 @@
     <string name="recount_video_duration">Video clip duration</string>
     <string name="recount_sum_and_video_duration">Shots &amp; video clip duration</string>
 
-    <string name="edit_camera_frame_duration">Edit camera shot interval</string>
-    <string name="edit_camera_record_duration">Edit camera record duration</string>
-    <string name="edit_video_duration">Edit video clip duration</string>
-    <string name="text_days">day</string>
-    <string name="text_hours">hour</string>
-    <string name="text_minutes">min</string>
-    <string name="text_seconds">sec</string>
-    <string name="text_milliseconds">ms</string>
-
     <!-- fragment sum of fragments -->
-    <string name="edit_sum_of_frames">Edit camera sum of shots</string>
-    <string name="choose_affect">Changing value will affect</string>
-    <string name="choose_affect_camera">Changing value will affect camera</string>
-    <string name="choose_affect_video">Changing value will affect video</string>
-    <string name="title_activity_frame_rate">Change video frame rate</string>
-    <string name="title_activity_sum_of_frames">Change camera sum of shots</string>
-    <string name="title_activity_time_set">TimeSetActivity</string>
+
+    <string name="choose_affect">Select what to affect</string>
+    <string name="choose_affect_camera">@string/choose_affect</string>
+    <string name="choose_affect_video">@string/choose_affect</string>
+
+    <string name="title_activity_frame_rate">Set frame rate</string>
+    <string name="title_activity_sum_of_frames">Set number of shots</string>
+    <string name="title_activity_time_set">Set time</string>
 
     <string name="colon">:</string>
     <string name="dot">.</string>

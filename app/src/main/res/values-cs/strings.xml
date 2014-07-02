@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Time lapse calc</string>
+    <string name="action_settings">Nastavení</string>
+
+    <string name="camera_label">Fotoaparát</string>
+    <string name="camera_frame_duration">Interval focení</string>
+    <string name="camera_record_duration">Celkový čas</string>
+    <string name="camera_frames">Počet fotek</string>
+    <string name="camera_frames_value">%1$d</string>
+
+    <string name="video_label">Videoklip</string>
+    <string name="video_frame_rate">Snímků za sekundu</string>
+    <string name="video_frame_rate_value">%1$02d</string>
+    <string name="video_duration">Celkový čas</string>
+
+    <string name="edit_camera_frame_duration">Změnte interval focení</string>
+    <string name="edit_camera_record_duration">Změnte celkový čas focení</string>
+    <string name="edit_sum_of_frames">Změnte celkový počet fotek</string>
+    <string name="edit_frame_rate">Změnte počet snímku za sekundu</string>
+    <string name="edit_frame_rate_value">%1$d</string>
+    <string name="edit_video_duration">Změnte celkový čas videa</string>
+
+    <string name="text_days">den</string>
+    <string name="text_hours">hod</string>
+    <string name="text_minutes">min</string>
+    <string name="text_seconds">sec</string>
+    <string name="text_milliseconds">ms</string>
+    <string name="duration_with_days">%1$d dní %2$02d:%3$02d:%4$02d.%5$03d</string>
+    <string name="duration_with_hours">%1$02d:%2$02d:%3$02d.%4$03d</string>
+    <string name="text_ok">Ok</string>
+    <string name="text_cancel">Zrušit</string>
+
+    <string name="recount_camera_frame_duration">Interval focení</string>
+    <string name="recount_camera_sum_and_frame_duration">Počet fotek a interval focení</string>
+    <string name="recount_camera_duration">Celkový čas focení</string>
+    <string name="recount_camera_sum_and_duration">Počet fotek a celkový čas focení</string>
+    <string name="recount_video_frame_rate">Počet snímků za sekundu u videa</string>
+    <string name="recount_sum_and_video_frame_rate">Počet fotek a snímků za sekundu u videa</string>
+    <string name="recount_video_duration">Celkový čas videa</string>
+    <string name="recount_sum_and_video_duration">Počet fotek a celkový čas videa</string>
+
+    <!-- fragment sum of fragments -->
+
+    <string name="choose_affect">Změna ovlivní</string>
+    <string name="choose_affect_camera">@string/choose_affect</string>
+    <string name="choose_affect_video">@string/choose_affect</string>
+
+    <string name="title_activity_frame_rate">Nastavte počet snímků</string>
+    <string name="title_activity_sum_of_frames">Nastavte počet fotek</string>
+    <string name="title_activity_time_set">Nastavte čas</string>
+
+    <string name="colon">:</string>
+    <string name="dot">.</string>
+    <string name="repair_value">Prosím upravte hodnotu \'%1s\' na číslo</string>
+</resources>
