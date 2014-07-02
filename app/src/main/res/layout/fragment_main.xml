@@ -59,10 +59,10 @@
                 android:id="@+id/video_label"
                 android:text="@string/video_label" />
             <LinearLayout
-                style="@style/TextArea"
-                android:id="@+id/video_frame_rate_line">
+                style="@style/TextArea">
                 <LinearLayout
-                    style="@style/TextLine.Top">
+                    style="@style/TextLine.Top"
+                    android:id="@+id/video_frame_rate_line">
                     <TextView
                         android:text="@string/video_frame_rate"
                         style="@style/TextView.TextLabel" />
