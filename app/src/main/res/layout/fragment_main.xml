@@ -11,7 +11,7 @@
 
         <LinearLayout
             style="@style/FrameSetGroup"
-            android:layout_weight="2"
+            android:layout_weight="@integer/photo_weight"
             android:layout_marginBottom="@dimen/frame_set_margin">
             <TextView
                 style="@style/TextView.frameSetHeader"
@@ -53,7 +53,7 @@
         </LinearLayout>
         <LinearLayout
             style="@style/FrameSetGroup"
-            android:layout_weight="3">
+            android:layout_weight="@integer/video_weight">
             <TextView
                 style="@style/TextView.frameSetHeader"
                 android:id="@+id/video_label"
