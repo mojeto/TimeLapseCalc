@@ -13,6 +13,7 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/edit_sum_of_frames"/>
         <EditText
+            android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_sum"
