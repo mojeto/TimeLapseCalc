@@ -1,4 +1,4 @@
-# <a href="https://play.google.com/store/apps/details?id=net.mojeto.app.timelapsecalc" alt="logo" title="Download from Google Play"><img src="https://raw.githubusercontent.com/mojeto/TimeLapseCalc/master/app/src/main/res/drawable-mdpi/ic_launcher.png"></a> TimeLapseCalc [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=net.mojeto.app.timelapsecalc) 
+# <a href="https://play.google.com/store/apps/details?id=net.mojeto.timelapsecalc.app" alt="logo" title="Download from Google Play"><img src="https://raw.githubusercontent.com/mojeto/TimeLapseCalc/master/app/src/main/res/drawable-mdpi/ic_launcher.png"></a> TimeLapseCalc [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=net.mojeto.timelapsecalc.app) 
 
 This repository contains the source code for the time-lapse calc android app.
 
